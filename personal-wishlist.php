@@ -263,7 +263,10 @@ if ( ! class_exists( 'Personal_Wishlist' ) ) {
 			global $wpdb;
 			$this->join($item_id);
 			$item_table = $wpdb->prefix . 'pwl_item';
-			return $wpdb->update($item_table, array('done' => 1), array('id' => $item_id));
+			$sql = "SELECT done FROM {$item_table} WHERE item_id = {$item_id}";
+			$record = array_pop($wpdb->get_results($sql));
+                        $done  = $record['done >= 0'] ? $done = 1 : $done = -1;
+			return $wpdb->update($item_table, array('done' => $done), array('id' => $item_id));
 		}
 
 		function ungive($item_id)
@@ -271,7 +274,10 @@ if ( ! class_exists( 'Personal_Wishlist' ) ) {
 			global $wpdb;
 			if ($this->user_is_only_giver($item_id)) $this->unjoin($item_id);
 			$item_table = $wpdb->prefix . 'pwl_item';
-			return $wpdb->update($item_table, array('done' => 0), array('id' => $item_id));
+			$sql = "SELECT done FROM {$item_table} WHERE item_id = {$item_id}";
+			$record = array_pop($wpdb->get_results($sql));
+                        $done  = $record['done >= 0'] ? $done = 0 : $done = -1;
+			return $wpdb->update($item_table, array('done' => $done), array('id' => $item_id));
 		}
 
 		function user_is_giver($item_id) {
