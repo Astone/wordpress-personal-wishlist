@@ -316,8 +316,8 @@ if ( ! class_exists( 'Personal_Wishlist' ) ) {
 			$sql = "SELECT display_name AS name, user_email AS mail FROM {$user_table} INNER JOIN {$giver_table} ON ({$user_table}.id = user_id) WHERE item_id = {$item_id} AND {$user_table}.id != {$user_id}";
 			$user_list = $wpdb->get_results($sql);
 
-                        $users_names = $user->name;
-			foreach ($user_list as $u) $users_names .= ", " . $u->name;
+            $user_names = $user->name;
+			foreach ($user_list as $u) $user_names .= ", " . $u->name;
 
 			$user_name = $user_list ? $user->name : "je";
 
