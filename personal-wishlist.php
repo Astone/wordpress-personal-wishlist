@@ -428,3 +428,4 @@ function has_wishlist()
 	$is_list = is_singular() && isset($post->post_content) && has_shortcode( $post->post_content, 'wishlist' );
 	return apply_filters( 'wpl_is_wishlist', $listing );
 }
+
