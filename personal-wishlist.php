@@ -266,7 +266,8 @@ if ( ! class_exists( 'Personal_Wishlist' ) ) {
 			$sql = "SELECT done FROM {$item_table} WHERE item_id = {$item_id}";
 			$record = array_pop($wpdb->get_results($sql));
                         $done  = $record['done >= 0'] ? $done = 1 : $done = -1;
-			return $wpdb->update($item_table, array('done' => $done), array('id' => $item_id));
+			$change = $wpdb->update($item_table, array('done' => $done), array('id' => $item_id));
+                        return $change && $done >= 0;
 		}
 
 		function ungive($item_id)
@@ -277,7 +278,8 @@ if ( ! class_exists( 'Personal_Wishlist' ) ) {
 			$sql = "SELECT done FROM {$item_table} WHERE item_id = {$item_id}";
 			$record = array_pop($wpdb->get_results($sql));
                         $done  = $record['done >= 0'] ? $done = 0 : $done = -1;
-			return $wpdb->update($item_table, array('done' => $done), array('id' => $item_id));
+			$change = $wpdb->update($item_table, array('done' => $done), array('id' => $item_id));
+                        return $change && $done >= 0;
 		}
 
 		function user_is_giver($item_id) {
@@ -314,30 +316,35 @@ if ( ! class_exists( 'Personal_Wishlist' ) ) {
 			$sql = "SELECT display_name AS name, user_email AS mail FROM {$user_table} INNER JOIN {$giver_table} ON ({$user_table}.id = user_id) WHERE item_id = {$item_id} AND {$user_table}.id != {$user_id}";
 			$user_list = $wpdb->get_results($sql);
 
+                        $users_names = $user->name;
+			foreach ($user_list as $u) $users_names .= ", " . $u->name;
+
+			$user_name = $user_list ? $user->name : "je";
+
 			$page_link = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $_SERVER['REDIRECT_URL'];
 			switch ($action)
 			{
 				case 'join':
-					$body  = "Beste {$user->name},\n\nHierbij de bevestiging dat je meedoet met {$item->name}.\n\n";
+					$body  = "Beste {$user_names},\n\nHierbij de bevestiging dat {$user_name} meedoet met {$item->name}.\n\n";
 					$body .= $user_list ? "In de CC van deze mail zie je wie er nog meer meedoen" : "Je bent de eerste die zich hiervoor heeft aangemeld";
 					$body .= " en je ontvangt een e-mail zodra iemand anders zich aan- of afmeldt.\n\n";
 					$body .= "- {$item->name}: {$item->url}\n- Overzicht: {$page_link}\n- Niet meer meedoen: {$page_link}?item_id={$item->id}&action=unjoin";
 					break;
 				case 'unjoin':
-					$body  = "Beste {$user->name},\n\nHierbij de bevestiging dat je NIET meer meedoet met {$item->name}.\n\n";
+					$body  = "Beste {$user_names},\n\nHierbij de bevestiging dat {$user_name} NIET meer meedoet met {$item->name}.\n\n";
 					$body .= "Je ontvangt hier vanaf nu geen e-mail berichten meer over.\n\n";
 					$body .= "- {$item->name}: {$item->url}\n- Overzicht: {$page_link}\n- Toch weer meedoen: {$page_link}?item_id={$item->id}&action=join";
 					break;
 				case 'give':
-					$body  = "Beste {$user->name},\n\nHierbij de bevestiging dat ";
+					$body  = "Beste {$user_names},\n\nHierbij de bevestiging dat ";
 					$body .= $user_list ? "jullie {$item->name} gaan geven.\n\n" : "je {$item->name} gaat geven.\n\n";
 					$body .= $user_list ? "In de CC van deze mail zie je wie er nog meer meedoen." : "";
 					$body .= "Andere mensen kunnen nu niet meer meedoen via de website.\n\n";
 					$body .= "- {$item->name}: {$item->url}\n- Overzicht: {$page_link}\n- Niet meer geven: {$page_link}?item_id={$item->id}&action=dont-give";
 					break;
 				case 'ungive':
-					$body  = "Beste {$user->name},\n\nHierbij de bevestiging dat ";
-					$body .= $user_list ? "jullie {$item->name} NIET meer gaan geven.\n\n" : "je {$item->name} NIET meer gaat geven.\n\n";
+					$body  = "Beste {$user_names},\n\nHierbij de bevestiging dat ";
+					$body .= $user_list ? "jullie {$item->name} NIET meer gaan geven.\n\n" : "{$user_name} {$item->name} NIET meer gaat geven.\n\n";
 					$body .= $user_list ? "In de CC van deze mail zie je wie er nog meer meededen. " : "Je ontvangt hier vanaf nu geen e-mail berichten meer over.\n\n";
 					$body .= $user_list ? "Iedereen staat nog steeds op de mailing list, dus je ontvangt een e-mail zodra iemand zich aan- of afmeldt voor {$item->name}.\n\n" : "";
 					$body .= "- {$item->name}: {$item->url}\n- Overzicht: {$page_link}\n";
@@ -434,4 +441,3 @@ function has_wishlist()
 	$is_list = is_singular() && isset($post->post_content) && has_shortcode( $post->post_content, 'wishlist' );
 	return apply_filters( 'wpl_is_wishlist', $listing );
 }
-
