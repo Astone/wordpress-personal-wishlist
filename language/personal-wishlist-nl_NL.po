@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Personal Wishlist\n"
-"POT-Creation-Date: 2015-01-18 19:53+0100\n"
-"PO-Revision-Date: 2015-01-18 19:53+0100\n"
+"POT-Creation-Date: 2015-01-18 20:41+0100\n"
+"PO-Revision-Date: 2015-01-18 20:41+0100\n"
 "Last-Translator: Bram Stoeller <bram@stoeller.nl>\n"
 "Language-Team: Bram Stoeller <bram@stoeller.nl>\n"
 "Language: Dutch\n"
@@ -34,22 +34,26 @@ msgstr "Gevers"
 msgid "Action"
 msgstr "Actie"
 
-#: templates/wishlist-item.php:26
+#: templates/wishlist-item.php:26 templates/wishlist-item.php:30
 msgid "Don't give"
-msgstr "Niet geven"
+msgstr "Niet meer geven"
 
 #: templates/wishlist-item.php:27
 msgid "Has been given"
 msgstr "Wordt gegeven"
 
-#: templates/wishlist-item.php:30
+#: templates/wishlist-item.php:31
+msgid "Give too"
+msgstr "Ook geven"
+
+#: templates/wishlist-item.php:34
 msgid "Unjoin"
 msgstr "Niet meer meedoen"
 
-#: templates/wishlist-item.php:31
+#: templates/wishlist-item.php:35
 msgid "Join"
 msgstr "Meedoen"
 
-#: templates/wishlist-item.php:33
+#: templates/wishlist-item.php:37
 msgid "Give"
 msgstr "Geven"
