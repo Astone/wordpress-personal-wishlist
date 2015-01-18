@@ -265,7 +265,7 @@ if ( ! class_exists( 'Personal_Wishlist' ) ) {
 			$item_table = $wpdb->prefix . 'pwl_item';
 			$sql = "SELECT done FROM {$item_table} WHERE item_id = {$item_id}";
 			$record = array_pop($wpdb->get_results($sql));
-                        $done  = $record['done >= 0'] ? $done = 1 : $done = -1;
+                        $done  = $record['done'] >= 0 ? $done = 1 : $done = -1;
 			$change = $wpdb->update($item_table, array('done' => $done), array('id' => $item_id));
                         return $change && $done >= 0;
 		}
@@ -277,7 +277,7 @@ if ( ! class_exists( 'Personal_Wishlist' ) ) {
 			$item_table = $wpdb->prefix . 'pwl_item';
 			$sql = "SELECT done FROM {$item_table} WHERE item_id = {$item_id}";
 			$record = array_pop($wpdb->get_results($sql));
-                        $done  = $record['done >= 0'] ? $done = 0 : $done = -1;
+                        $done  = $record['done'] >= 0 ? $done = 0 : $done = -1;
 			$change = $wpdb->update($item_table, array('done' => $done), array('id' => $item_id));
                         return $change && $done >= 0;
 		}
