@@ -1,0 +1,55 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Personal Wishlist\n"
+"POT-Creation-Date: 2015-01-18 19:41+0100\n"
+"PO-Revision-Date: 2015-01-18 19:43+0100\n"
+"Last-Translator: \n"
+"Language-Team: Bram Stoeller <bram@stoeller.nl>\n"
+"Language: Dutch\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _e\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SearchPath-0: templates\n"
+
+#: templates/wishlist-header.php:18
+msgid "Item"
+msgstr "Item"
+
+#: templates/wishlist-header.php:19
+msgid "Price (+/-)"
+msgstr "Prijs (+/-)"
+
+#: templates/wishlist-header.php:20
+msgid "Link"
+msgstr "Link"
+
+#: templates/wishlist-header.php:21
+msgid "Givers"
+msgstr "Gevers"
+
+#: templates/wishlist-header.php:22
+msgid "Action"
+msgstr "Actie"
+
+#: templates/wishlist-item.php:26
+msgid "Don't give"
+msgstr "Niet geven"
+
+#: templates/wishlist-item.php:27
+msgid "Has been given"
+msgstr "Wordt gegeven"
+
+#: templates/wishlist-item.php:30
+msgid "Unjoin"
+msgstr "Niet meer meedoen"
+
+#: templates/wishlist-item.php:31
+msgid "Join"
+msgstr "Meedoen"
+
+#: templates/wishlist-item.php:33
+msgid "Give"
+msgstr "Geven"
